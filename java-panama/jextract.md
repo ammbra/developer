@@ -189,7 +189,7 @@ Compile and run it.
 
 ```text
 <copy>
-java --enable-native-access=ALL-UNNAMED --enable-preview --source=19 -Djava.library.path=$PWD HelloWorld.java
+java --enable-native-access=ALL-UNNAMED --enable-preview --source=20 -Djava.library.path=$PWD HelloWorld.java
 </copy>
 ```
 

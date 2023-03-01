@@ -3,7 +3,7 @@
 ## Introduction
 
 
-This lab introduces you to the Foreign Function & Memory API, a Preview Feature of Java 19.
+This lab introduces you to the Foreign Function & Memory API, a preview feature (2nd preview) of the JDK 20.
 
 Estimated Time: ~10 minutes
 
@@ -11,7 +11,7 @@ Estimated Time: ~10 minutes
 
 ### **About Panama's Foreign Function & Memory API**
 
-The Foreign Function & Memory (FFM) API, defined in JEP 424, introduces an API by which Java programs can interoperate with code and data outside of the Java runtime. The FFM API enables (1) to efficiently invoke **foreign functions** (i.e., code outside the JVM) and (2) to safely access **foreign memory** (i.e., memory not managed by the JVM). In practice, the FFM API defines classes and interfaces so that client code can
+The Foreign Function & Memory (FFM) API, defined in JEP 434, introduces an API by which Java programs can interoperate with code and data outside of the Java runtime. The FFM API enables (1) to efficiently invoke **foreign functions** (i.e., code outside the JVM) and (2) to safely access **foreign memory** (i.e., memory not managed by the JVM). In practice, the FFM API defines classes and interfaces so that client code can
 
    * Allocate foreign memory (`MemorySegment`, `MemoryAddress`, and `SegmentAllocator`),
    * manipulate and access structured foreign memory (`MemoryLayout`),
@@ -52,7 +52,7 @@ Note that this part of the workshop is theoretical as it introduces and explains
 
 ## Task 2: Preview Feature
 
-Let's now discuss *preview feature* as you will be using the FFM API, a preview feature of Java 19. 
+Let's now discuss *preview feature* as you will be using the FFM API, a preview feature of Java 20. 
 
 Java language features and Java SE API features have a lot of exposure, and any mistake in their design can have negative consequences. To avoid such a risk, JEP 12 offers the ability to preview new Java language and Java SE API features.
 
@@ -65,7 +65,7 @@ Preview features are also specific to a given Java SE feature release and requir
 
 ```java
 // compile time
-javac --enable-preview --release 19 MyClass.java
+javac --enable-preview --release 20 MyClass.java
 ```
 
 ```java
@@ -88,18 +88,18 @@ You will always get a message informing you, at both compile time and at runtime
 
 
 ```text 
-> javac --enable-preview --release 19 …
-Note: Simple.java uses preview features of Java SE 19.
+> javac --enable-preview --release 20 …
+Note: Simple.java uses preview features of Java SE 20.
 Note: Recompile with -Xlint:preview for details.
 …
 
 > java --enable-preview …
-Note: Simple.java uses preview features of Java SE 19.
+Note: Simple.java uses preview features of Java SE 20.
 …
 ```
 ## Task 3: Incubator Modules
 
-JEP 11 introduces the notion of incubation to enable the inclusion of JDK APIs and JDK tools that might one day, after improvements and stabilizations, be included and supported in the Java SE platform or in the JDK. The Vector API is one of the incubating APIs (4th round of incubation) in Java 19.
+JEP 11 introduces the notion of incubation to enable the inclusion of JDK APIs and JDK tools that might one day, after improvements and stabilizations, be included and supported in the Java SE platform or in the JDK. The Vector API is one of the incubating APIs (5th round of incubation) in Java 20.
 
 Similar to Preview Features, incubator modules are also shielded from accidental use because incubating can be done only in the `jdk.incubator` namespace. Therefore, an application on the classpath must use the `--add-modules` command-line option to explicitly request resolution for an incubating feature. Alternatively, a modular application must specify requires or requires transitive dependencies upon an incubating feature directly.
 
@@ -115,7 +115,7 @@ The example below invokes the Java launcher (`java`), not the Java compiler (`ja
 
 ```java
 // compile *and* run MyClass.java
-java --enable-preview --source 19 MyClass.java
+java --enable-preview --source 20 MyClass.java
 ```
 
 Using the traditional approach, i.e. `javac` and `java`, or the other, i.e. just `java` is just a matter of preferences. In the end, the same underlying operations are always performed.
@@ -142,6 +142,7 @@ Such a warning can be disabled with the `--enable-native-access=M` flag on the j
 * [Core Libraries - Foreign Function and Memory API](https://docs.oracle.com/en/java/javase/19/core/foreign-function-and-memory-api.html#GUID-FBE990DA-C356-46E8-9109-C75567849BA8)
 * [Video: Project Panama: Say Goodbye to JNI](https://inside.java/2022/04/04/projectpanama/)
 * [JEP 424: Foreign Function & Memory API (Preview)](https://openjdk.org/jeps/424)
+* [JEP 434: Foreign Function & Memory API (Second Preview)](https://openjdk.org/jeps/434)
 * [Using the Preview Features Available in the JDK](https://dev.java/learn/using-the-preview-features-available-in-the-jdk/)
 * [JEP 330: Launch Single-File Source-Code Programs](https://openjdk.org/jeps/330)
 * [JEP 12: Preview Features](https://openjdk.org/jeps/12)
@@ -149,5 +150,5 @@ Such a warning can be disabled with the `--enable-native-access=M` flag on the j
 
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
-* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
-* **Last Updated By/Date** - David Delabassée, Sept. 29 2022
+* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee), [Ana-Maria Mihalceanu, Java Developer Advocate Java Platform Group - Oracle](https://twitter.com/ammbra1508)
+* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 1 2023
