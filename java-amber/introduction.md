@@ -12,7 +12,7 @@ So far, it has delivered:
 * records (in Java 16)
 * sealed types (in Java 17)
 
-And it is working on more features, some of them in preview in Java 19:
+And it is working on more features, some of them in preview in Java 20:
 
 * pattern matching in `switch`
 * record patterns
@@ -50,5 +50,5 @@ Today's goal is to give you, in a short amount of time, an introduction to recen
 ## Acknowledgements
 
 * **Author** - [Nicolai Parlog, DevRel, Java Platform Group - Oracle](https://nipafx.dev/)
-* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
-* **Last Updated By/Date** - Nicolai Parlog, Sep. 19 2022
+* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee), [Ana-Maria Mihalceanu, Java Developer Advocate, Java Platform Group- Oracle](https://twitter.com/ammbra1508)
+* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 3 2023

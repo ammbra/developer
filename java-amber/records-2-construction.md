@@ -215,7 +215,55 @@ public record Range(int start, int end) {
 }
 </copy>
 ```
+## Task 5: Pattern Matching on a Record
 
+In Java 19, there were three ways to perform pattern matching on a record:
+
+```java
+<copy>
+// Pattern matching for instanceof
+if (object instanceof Range r) {
+	System.out.println("The object is a Range, r.start = " + p.start() + ", p.end = " + p.end());
+}
+
+// Record pattern
+if (object instanceof Point(int start, int end) {
+	System.out.println("The object is a Range, start = " + start + ", end = " + end);
+}
+
+// Named record pattern
+if (object instanceof Range(int start, int end) r) {
+	System.out.println("The object is a Range, r.start = " + r.start() + ", r.end = " + r.end()
+				+ ", start = " + start + ", end = " + end);
+}
+</copy>
+```
+Run the above code using:
+```shell
+<copy>
+java --enable-preview --source 20 Range.java 
+</copy>
+```
+And you will observe that the compilation failed because named record pattern was determined to be superfluous and was removed in Java 20: 
+
+```shell
+Range.java:32: error: ')' expected
+        if (object instanceof Point(int start, int end) {
+                                                       ^
+Range.java:37: error: ')' expected
+        if (object instanceof Range(int start, int end) r) {
+                                                       ^
+Range.java:37: error: not a statement
+        if (object instanceof Range(int start, int end) r) {
+                                                        ^
+Range.java:37: error: ';' expected
+        if (object instanceof Range(int start, int end) r) {
+                                                         ^
+Note: Range.java uses preview features of Java SE 20.
+Note: Recompile with -Xlint:preview for details.
+4 errors
+error: compilation failed
+```
 
 ## Learn More
 
@@ -225,5 +273,5 @@ public record Range(int start, int end) {
 ## Acknowledgements
 
 * **Author** - [Nicolai Parlog, DevRel, Java Platform Group - Oracle](https://nipafx.dev/)
-* **Contributor** - [José Paumard, DevRel, Java Platform Group - Oracle](https://twitter.com/JosePaumard)
-* **Last Updated By/Date** - Nicolai Parlog, Sep. 19 2022
+* **Contributor** - [José Paumard, DevRel, Java Platform Group - Oracle](https://twitter.com/JosePaumard), [Ana-Maria Mihalceanu, Java Developer Advocate, Java Platform Group- Oracle](https://twitter.com/ammbra1508)
+* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 3 2023

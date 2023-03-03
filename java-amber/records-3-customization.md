@@ -192,8 +192,12 @@ public static void main(String[] args) {
 	var node3 = new Node(3, Collections.emptyList());
 
 	List<Node> nodes = new ArrayList<>(List.of(node3, node1, node2));
-	// note that the nodes are out of order (according to their ids)
-	System.out.println(nodes);
+	
+	//Starting with Java 20, you can specify a record pattern in the for loop and then access x and y directly
+    //note that the nodes are out of order (according to their ids)
+    for (Node n : nodes) {
+		System.out.printf("(%d, %s)%n", n.id(), n.children());
+	}
 
 	Collections.sort(nodes);
 	// now they are sorted according the comparator
@@ -212,4 +216,5 @@ public static void main(String[] args) {
 ## Acknowledgements
 
 * **Author** - [Nicolai Parlog, DevRel, Java Platform Group - Oracle](https://nipafx.dev/)
-* **Last Updated By/Date** - Nicolai Parlog, Sep. 21 2022
+* **Contributor** - [Ana-Maria Mihalceanu, Java Developer Advocate, Java Platform Group- Oracle](https://twitter.com/ammbra1508)
+* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 3 2023
