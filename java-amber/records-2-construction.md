@@ -13,6 +13,7 @@ In this lab, you will learn how to:
 * override a record's canonical constructor
 * use the compact constructor
 * define additional constructors and static factory methods
+* use several pattern matching cases on a record.
 
 The topic of constructing records is important because as data carriers, it's central to their design that they only represent legal states of the system.
 It should not be possible to successfully create an instance of a record that is in an illegal state and it's the constructor's job to make sure of that.
