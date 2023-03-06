@@ -269,17 +269,20 @@ Range goodRange = new Range(1, 10);
 
 // Pattern matching for instanceof
 if (goodRange instanceof Range r) {
-	System.out.println("The object is a Range, r.start = " + r.start() + ", r.end = " + r.end());
+	System.out.println(
+		"The object is a Range, r.start = " + r.start() + ", r.end = " + r.end());
 }
 
 // Record pattern
 if (goodRange instanceof Range(int start, int end)) {
-	System.out.println("The object is a Range, start = " + start + ", end = " + end);
+	System.out.println(
+		"The object is a Range, start = " + start + ", end = " + end);
 }
 
 // Named record pattern
 if (goodRange instanceof Range(int start, int end) r) {
-	System.out.println("The object is a Range, r.start = " + r.start() + ", r.end = " + r.end());
+	System.out.println(
+		"The object is a Range, r.start = " + r.start() + ", r.end = " + r.end());
 }
 </copy>
 ```
