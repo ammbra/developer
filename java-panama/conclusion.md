@@ -22,7 +22,7 @@ If you want to stay connected and see how Panama is evolving but also get the la
 ## Resources
 * [JEP 424: Foreign Function & Memory API (Preview)](https://openjdk.org/jeps/424)
 * [Core Libraries - Foreign Function and Memory API](https://docs.oracle.com/en/java/javase/19/core/foreign-function-and-memory-api.html#GUID-FBE990DA-C356-46E8-9109-C75567849BA8)
-* [JEP 434: Foreign Function & Memory API (Second Preview)](https://openjdk.org/jeps/434)
+* [JEP 424: Foreign Function & Memory API (Preview)](https://openjdk.org/jeps/424)
 * [Video: Project Panama: Say Goodbye to JNI](https://inside.java/2022/04/04/projectpanama/)
 * [Jextract Early-Access Builds](https://jdk.java.net/jextract/)
 * [Using the Preview Features Available in the JDK](https://dev.java/learn/using-the-preview-features-available-in-the-jdk/)
@@ -31,4 +31,4 @@ If you want to stay connected and see how Panama is evolving but also get the la
 
 ## Acknowledgements
 * **Author** - [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
-* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 1 2023
+* **Last Updated By/Date** - David Delabassée, Oct. 1 2022

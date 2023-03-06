@@ -65,15 +65,15 @@ SymbolLookup linkerLookup = linker.defaultLookup();</copy>
 
 2. Allocate the required foreign memory
 
-Find the address of the symbol with the target function name, this will return a [memory segment](https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/foreign/MemorySegment.html).
+Perform the lookup with the target function name, this will return a [memory segment](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/foreign/MemorySegment.html).
 
 ```
-MemorySegment memSegment = linkerLookup.find(functionName).get();
+MemorySegment memSegment = linkerLookup.lookup(functionName).get();
 ```
 
 3. Create a FunctionDecriptor
 
-You should now create a [FunctionDescriptor](https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html) that matches the `int atoi ( const char * str )` signature.
+You should now create a [FunctionDescriptor](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/foreign/FunctionDescriptor.html) that matches the `int atoi ( const char * str )` signature.
 
 ```java
 <copy>FunctionDescriptor funcDescriptor = FunctionDescriptor.of(JAVA_INT, ADDRESS);</copy>
@@ -81,19 +81,19 @@ You should now create a [FunctionDescriptor](https://docs.oracle.com/en/java/jav
 
 4. Create a Method Handle
 
-Using the FunctionDescriptor, you can now create the corresponding [Method Handle](https://docs.oracle.com/en/java/javase/20/docs/api/java.base/java/lang/invoke/MethodHandle.html).
+Using the FunctionDescriptor, you can now create the corresponding [Method Handle](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/invoke/MethodHandle.html).
 
 ```java
-<copy>MethodHandle funcHandle = linker.downcallHandle(memSegment,funcDescriptor);</copy>
+<copy>MethodHandle funcHandle = linker.downcallHandle(memSegment.address(), funcDescriptor);</copy>
 ```
 
 5. Invoke the function
 
-You can use an `Arena` object to control the lifecycle of the MemorySegment as arenas provide strong temporal safety guarantees: a memory segment allocated by an arena cannot be accessed after the arena has been closed. Using the newly created `MethodHandle`, you can now invoke the native function. You should cast the returned object to `int`.
+Using the newly created MethodHandle, you can now invoke the native function. You should cast the returned object to `int`.
 
 ```java
-<copy>try (var arena = Arena.openConfined()) {
-   var segment = arena.allocateUtf8String(payload);
+<copy>try (var memorySession = MemorySession.openConfined()) {
+   var segment = memorySession.allocateUtf8String(payload);
    int result = (int) funcHandle.invoke(segment);
    System.out.println("The answer is " + result*2);
 }</copy>
@@ -112,34 +112,36 @@ public class Simple {
 
     public static void main(String[] args) throws Throwable {
         String payload = "21";
+
         var functionName = "atoi";
 
         Linker linker = Linker.nativeLinker();
+
         SymbolLookup linkerLookup = linker.defaultLookup();
 
-        MemorySegment memSegment = linkerLookup.find(functionName).get();
+        MemorySegment memSegment = linkerLookup.lookup(functionName).get();
 
         FunctionDescriptor funcDescriptor = FunctionDescriptor.of(JAVA_INT, ADDRESS);
-        MethodHandle funcHandle = linker.downcallHandle(memSegment, funcDescriptor);
 
-        try (var arena = Arena.openConfined()) {
-            var segment = arena.allocateUtf8String(payload);
+        MethodHandle funcHandle = linker.downcallHandle(memSegment.address(), funcDescriptor);
+
+        try (var memorySession = MemorySession.openConfined()) {
+            var segment = memorySession.allocateUtf8String(payload);
             int result = (int) funcHandle.invoke(segment);
             System.out.println("The answer is " + result*2);
-         }
+        }
     }
-
 }
 </copy>
 ```
 
 7. Test the Downcall
 
-You can now compile and test the class. Do keep in mind that the FFM API is a Preview Feature (2nd preview) in Java 20 so you should enable them at both compile time and runtime.
+You can now compile and test the class. Do keep in mind that the FFM API is a Preview Feature in Java 19 so you should enable them at both compile time and runtime.
 
 
 ```java
-<copy>javac --enable-preview --release 20 Simple.java</copy>
+<copy>javac --enable-preview --release 19 Simple.java</copy>
 ```
 
 The javac compiler will inform you that you are using Preview Feature. This is not a warning, so there's nothing to worry about.
@@ -158,7 +160,7 @@ Preview features should also be enabled at runtime.
 You can get rid of the FFM warnings but also perform the compilation and execution in a single command.
 
 ```text
-<copy>java --enable-preview --source 20 --enable-native-access=ALL-UNNAMED Simple.java</copy>
+<copy>java --enable-preview --source 19 --enable-native-access=ALL-UNNAMED Simple.java</copy>
 ```
 
 
@@ -173,5 +175,5 @@ You can now move to the next section.
 
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
-* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee), [Ana-Maria Mihalceanu, Java Developer Advocate Java Platform Group - Oracle](https://twitter.com/ammbra1508)
-* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 1 2023
+* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
+* **Last Updated By/Date** - David Delabassée, Sept. 10 2022

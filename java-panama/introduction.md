@@ -7,9 +7,9 @@ Project Panama is an OpenJDK project whose goal is to improve and enrich the con
 
 Project Panama also tackles Single Instruction Mulitple Data programming in Java. SIMD is a programming technique that leverages Vector Units embedded in CPUs to produce more performant code. 
 
-In practice, there are, in Java 20, 2 APIs that are developed under the Panama umbrella:
-- the Foreign Function & Memory API (Second Preview)
-- the Vector API (Fifth Incubator)
+In practice, there are, in Java 19, 2 APIs that are developed under the Panama umbrella:
+- the Foreign Function & Memory API (Preview)
+- the Vector API (Fourth Incubator)
 
 Moreover, jextract is a tool also developed under the same umbrella.
 
@@ -26,5 +26,5 @@ This lab assumes you have:
 
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
-* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee), [Ana-Maria Mihalceanu, Java Developer Advocate Java Platform Group - Oracle](https://twitter.com/ammbra1508)
-* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 1 2023
+* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
+* **Last Updated By/Date** - David Delabassée, Sept. 30 2022

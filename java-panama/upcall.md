@@ -154,8 +154,8 @@ Create an `Upcall.java` application class with 2 simples methods : `callback()` 
 
       private static final SymbolLookup
           symbolLookup = name ->
-             systemLookup.find(name)
-                         .or(() -> linkerLookup.find(name));
+             systemLookup.lookup(name)
+                         .or(() -> linkerLookup.lookup(name));
       </copy>
       …
 ```
@@ -170,7 +170,7 @@ Define a method handle for the `void callback()` method.
       public class Upcall {
       …
       <copy>
-      private static MethodHandle callbackHandle;
+      private static final MethodHandle callbackHandle;
 
       static {
 
@@ -203,7 +203,7 @@ Define a method handle for the `void callback()` method.
       …
       <copy>
       static final MethodHandle nativeFunctionWithCallback
-         = symbolLookup.find("callback_function")
+         = symbolLookup.lookup("callback_function")
               .map(add ->
                   linker.downcallHandle(add, FunctionDescriptor.ofVoid(ADDRESS))
                ).orElseThrow();
@@ -229,12 +229,12 @@ To invoke a foregin function, you need to create an [upcall stub](https://docs.o
 ```java
       System.out.println("Java\t main() method");
 
-      <copy>      
-      var arena = Arena.openConfined();
+      <copy>
+      var ms = MemorySession.openConfined();
       var callbackNativeSymbolSegment = linker.upcallStub(
-                    callbackHandle, callbackDescriptor, arena.scope());
-        
-      nativeFunctionWithCallback.invokeExact((MemorySegment)callbackNativeSymbolSegment);
+                  callbackHandle, callbackDescriptor, ms);
+
+      nativeFunctionWithCallback.invokeExact((Addressable) callbackNativeSymbolSegment);
       </copy>
 
       System.out.println("Java\t main() method exit");
@@ -262,7 +262,7 @@ You can now compile and run the code.
 
 ```java
       <copy>
-      java -Dlib.path=$PWD/mylib.so --enable-native-access=ALL-UNNAMED --enable-preview --source 20 Upcall.java
+      java -Dlib.path=$PWD/lib.platform --enable-native-access=ALL-UNNAMED --enable-preview --source 19 Upcall.java
       </copy>
 ````
 
@@ -283,5 +283,5 @@ Congratulations, you have developed your first upcall with the FFM API. You can 
 
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
-* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee), [Ana-Maria Mihalceanu, Java Developer Advocate Java Platform Group - Oracle](https://twitter.com/ammbra1508)
-* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 1 2023
+* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
+* **Last Updated By/Date** - David Delabassée, Sept. 27 2022
