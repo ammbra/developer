@@ -28,7 +28,7 @@ On Project Amber in general:
 
 * 📝 [Project Amber site](https://openjdk.org/projects/amber/)
 * 🎥 [Java Language Futures: All Aboard Project Amber](https://www.youtube.com/watch?v=qul2B8iPC-o)
-* 🎥 [Java Language Futures: Late 2021 Edition](https://www.youtube.com/watch?v=hDV6G1MbUH8)
+* 🎥 [Java's Plans for 2023](https://www.youtube.com/watch?v=-sfB40FHfJE)
 
 On specific features:
 

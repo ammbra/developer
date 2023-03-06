@@ -197,16 +197,16 @@ public static void main(String[] args) {
     System.out.println(nodes);
 
 
-		Collections.sort(nodes);
+	Collections.sort(nodes);
 	
 	//now they are sorted according the comparator
-    for (Node(int id, List<Node> children) : nodes) {
+    for (Node(int id, List<Node> children) : nodes) { // Record Pattern in header!
 		System.out.printf("(%d, %s)%n", id, children);
 	}}
 </copy>
 ```
-Starting with Java 20, you can specify a record pattern in the for loop and then access id and children directly.
-
+Starting with Java 20, you can specify a record pattern in the header of an enhanced `for` statement.
+On each iteration of the loop, each successive element in the list is pattern matched against the record pattern in the header.
 
 ## Learn More
 
