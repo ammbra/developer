@@ -194,7 +194,7 @@ public static void main(String[] args) {
 	List<Node> nodes = new ArrayList<>(List.of(node3, node1, node2));
 
 	//note that the nodes are out of order (according to their ids)
-    System.out.println(nodes);
+    	System.out.println(nodes);
 
 	Collections.sort(nodes);
 
