@@ -4,7 +4,7 @@
 
 This lab dives deeper into how record construction can be customized
 
-Estimated Time: ~15 minutes
+Estimated Time: ~20 minutes
 
 ### **Objectives**
 
@@ -177,7 +177,7 @@ public static void main(String[] args) {
 </copy>
 ```
 
-Remember that you can run this small program by issuing the command `java Range.java`.
+Remember that you can run this small program by issuing the command `java --enable-preview --source 20 Range.java`.
 
 
 ## Task 4: Factory Methods And Constructor Visibility
@@ -219,6 +219,10 @@ public record Range(int start, int end) {
 
 In Java 19, there were three ways to perform pattern matching on a record:
 
+* pattern matching for instanceof, originally introduced in Java 16, allows you to declare a variable directly during the instanceof check,
+* record pattern, with which you can extract the values of the pattern instance,
+* and named record pattern. 
+
 ```java
 <copy>
 // Pattern matching for instanceof
@@ -227,24 +231,24 @@ if (object instanceof Range r) {
 }
 
 // Record pattern
-if (object instanceof Point(int start, int end) {
+if (object instanceof Range(int start, int end) {
 	System.out.println("The object is a Range, start = " + start + ", end = " + end);
 }
 
 // Named record pattern
 if (object instanceof Range(int start, int end) r) {
-	System.out.println("The object is a Range, r.start = " + r.start() + ", r.end = " + r.end()
-				+ ", start = " + start + ", end = " + end);
+	System.out.println("The object is a Range, r.start = " + r.start() + ", r.end = " + r.end());
 }
 </copy>
 ```
-Run the above code using:
+The named record pattern was determined to be superfluous and removed in Java 20. Run the above code using:
+
 ```shell
 <copy>
 java --enable-preview --source 20 Range.java 
 </copy>
 ```
-And you will observe that the compilation failed because named record pattern was determined to be superfluous and was removed in Java 20: 
+And you will observe that for the named record pattern example the compilation will fail:
 
 ```shell
 Range.java:32: error: ')' expected
@@ -274,4 +278,4 @@ error: compilation failed
 
 * **Author** - [Nicolai Parlog, DevRel, Java Platform Group - Oracle](https://nipafx.dev/)
 * **Contributor** - [José Paumard, DevRel, Java Platform Group - Oracle](https://twitter.com/JosePaumard), [Ana-Maria Mihalceanu, Java Developer Advocate, Java Platform Group- Oracle](https://twitter.com/ammbra1508)
-* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 3 2023
+* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 6 2023

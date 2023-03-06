@@ -193,18 +193,19 @@ public static void main(String[] args) {
 
 	List<Node> nodes = new ArrayList<>(List.of(node3, node1, node2));
 	
-	//Starting with Java 20, you can specify a record pattern in the for loop and then access x and y directly
     //note that the nodes are out of order (according to their ids)
-    for (Node n : nodes) {
-		System.out.printf("(%d, %s)%n", n.id(), n.children());
-	}
+    System.out.println(nodes);
 
-	Collections.sort(nodes);
-	// now they are sorted according the comparator
-	System.out.println(nodes);
-}
+
+		Collections.sort(nodes);
+	
+	//now they are sorted according the comparator
+    for (Node(int id, List<Node> children) : nodes) {
+		System.out.printf("(%d, %s)%n", id, children);
+	}}
 </copy>
 ```
+Starting with Java 20, you can specify a record pattern in the for loop and then access id and children directly.
 
 
 ## Learn More
@@ -217,4 +218,4 @@ public static void main(String[] args) {
 
 * **Author** - [Nicolai Parlog, DevRel, Java Platform Group - Oracle](https://nipafx.dev/)
 * **Contributor** - [Ana-Maria Mihalceanu, Java Developer Advocate, Java Platform Group- Oracle](https://twitter.com/ammbra1508)
-* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 3 2023
+* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 6 2023
