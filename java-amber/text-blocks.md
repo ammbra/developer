@@ -4,7 +4,7 @@
 
 This lab introduces text blocks
 
-Estimated Time: ~15 minutes
+Estimated Time: ~20 minutes
 
 ### **Objectives**
 
@@ -216,5 +216,4 @@ As you can see, this is also a way to have the closing delimiter on its own line
 ## Acknowledgements
 
 * **Author** - [Nicolai Parlog, DevRel, Java Platform Group - Oracle](https://nipafx.dev/)
-* **Contributor** - [Ana-Maria Mihalceanu, Java Developer Advocate, Java Platform Group- Oracle](https://twitter.com/ammbra1508)
-* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 6 2023
+* **Last Updated By/Date** - Nicolai Parlog, Sep. 21 2022

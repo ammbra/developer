@@ -4,7 +4,7 @@
 
 This lab dives deeper into how record construction can be customized
 
-Estimated Time: ~20 minutes
+Estimated Time: ~15 minutes
 
 ### **Objectives**
 
@@ -215,100 +215,6 @@ public record Range(int start, int end) {
 
 }
 </copy>
-```
-## Task 5: Pattern Matching on a Record
-
-Record patterns are a preview language feature ([second preview](https://openjdk.org/jeps/432)) in JDK 20.
-
-For example, given the declaration:
-```java
-public record Range(int start, int end) { }
-```
-
-a value r matches the record pattern `Range(int start, int end)` if it is an instance of the record type `Range`. In that case, the pattern variable `start` is initialized with the result of invoking the accessor method corresponding to `start` on the value v, and the pattern variable `end` is initialized to the result of invoking the accessor method corresponding to `end` on the value v.
-
-**⚠ WARNING:** The `null` value does not match any record pattern.
-
-A record pattern can use `var` to match against a record component without stating the type of the component.
-For example, the pattern `Range(var start, var end)` is shorthand for the pattern `Range(int start, int end)`:
-```java
-<copy>
-Range goodRange = new Range(1, 10);
-// Record pattern using var
-if (goodRange instanceof Range(var start, var end)) {
-	System.out.println("A good range starts with start = " + start + ", and ends with end = " + end);
-}
-</copy>
-```
-Java 20 adds support for inference of type arguments of generic record patterns:
-
-```java
-<copy>
-record Limit<T>(T t) {}
-    
-public static void main(String[] args) {
-    var range = Range.from0To(10);
-	var limit = new Limit<>(range);
-
-	if (limit instanceof Limit(var r)) {
-		System.out.println("The limit has the following range = " + r);
-	}
-}
-</copy>
-```
-
-In Java 19, there were three ways to perform pattern matching on a record:
-
-* pattern matching for instanceof, originally introduced in Java 16, allows you to declare a variable directly during the instanceof check,
-* record pattern, with which you can extract the values of the pattern instance,
-* and named record pattern. 
-
-```java
-<copy>
-Range goodRange = new Range(1, 10);
-
-// Pattern matching for instanceof
-if (goodRange instanceof Range r) {
-	System.out.println(
-		"The object is a Range, r.start = " + r.start() + ", r.end = " + r.end());
-}
-
-// Record pattern
-if (goodRange instanceof Range(int start, int end)) {
-	System.out.println(
-		"The object is a Range, start = " + start + ", end = " + end);
-}
-
-// Named record pattern
-if (goodRange instanceof Range(int start, int end) r) {
-	System.out.println(
-		"The object is a Range, r.start = " + r.start() + ", r.end = " + r.end());
-}
-</copy>
-```
-The named record pattern was determined to be superfluous and removed in Java 20. Run the above code using:
-
-```shell
-<copy>
-java --enable-preview --source 20 Range.java 
-</copy>
-```
-And you will observe that the compilation will fail for the named record pattern example:
-
-```shell
-Range.java:35: error: ')' expected
-        if (goodRange instanceof Range(int start, int end) r) {
-                                                          ^
-Range.java:35: error: not a statement
-        if (goodRange instanceof Range(int start, int end) r) {
-                                                           ^
-Range.java:35: error: ';' expected
-        if (goodRange instanceof Range(int start, int end) r) {
-                                                            ^
-Note: Range.java uses preview features of Java SE 20.
-Note: Recompile with -Xlint:preview for details.
-3 errors
-error: compilation failed
 ```
 
 ## Learn More
