@@ -13,7 +13,7 @@ Text blocks are very standalone and will quickly find their way into your progra
 
 Records are a bit more subtle.
 Their boilerplate reduction makes adoption very inviting but over time you will learn by experience where records fit in and where they don't so much.
-An interesting aspect that we could not explore in detail were record patterns, which are currently in their second preview in Java 20.
+An interesting aspect that we could not explore were record patterns, which are currently in their second preview in Java 20.
 They tie records into the larger topic of pattern matching and are a great topic for you to explore on your own (see links below).
 
 * Follow [@Java](https://twitter.com/java) on Twitter
