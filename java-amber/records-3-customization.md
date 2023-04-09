@@ -192,16 +192,21 @@ public static void main(String[] args) {
 	var node3 = new Node(3, Collections.emptyList());
 
 	List<Node> nodes = new ArrayList<>(List.of(node3, node1, node2));
-	// note that the nodes are out of order (according to their ids)
-	System.out.println(nodes);
+
+	//note that the nodes are out of order (according to their ids)
+    	System.out.println(nodes);
 
 	Collections.sort(nodes);
-	// now they are sorted according the comparator
-	System.out.println(nodes);
+
+	//now they are sorted according the comparator
+	for (Node(int id, List<Node> children) : nodes) { // Record Pattern in header!
+	    System.out.printf("(%d, %s)%n", id, children);
+	}
 }
 </copy>
 ```
-
+Starting with Java 20, you can specify a record pattern in the header of an enhanced `for` statement.
+On each iteration of the loop, each successive element in the list is pattern matched against the record pattern in the header.
 
 ## Learn More
 
@@ -212,4 +217,5 @@ public static void main(String[] args) {
 ## Acknowledgements
 
 * **Author** - [Nicolai Parlog, DevRel, Java Platform Group - Oracle](https://nipafx.dev/)
-* **Last Updated By/Date** - Nicolai Parlog, Sep. 21 2022
+* **Contributor** - [Ana-Maria Mihalceanu, Java Developer Advocate, Java Platform Group- Oracle](https://twitter.com/ammbra1508)
+* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 6 2023

@@ -13,6 +13,7 @@ In this lab, you will learn how to:
 * override a record's canonical constructor
 * use the compact constructor
 * define additional constructors and static factory methods
+* use several pattern matching cases on a record.
 
 The topic of constructing records is important because as data carriers, it's central to their design that they only represent legal states of the system.
 It should not be possible to successfully create an instance of a record that is in an illegal state and it's the constructor's job to make sure of that.
@@ -177,7 +178,7 @@ public static void main(String[] args) {
 </copy>
 ```
 
-Remember that you can run this small program by issuing the command `java Range.java`.
+Remember that you can run this small program by issuing the command `java --enable-preview --source 20 Range.java`.
 
 
 ## Task 4: Factory Methods And Constructor Visibility
@@ -216,7 +217,6 @@ public record Range(int start, int end) {
 </copy>
 ```
 
-
 ## Learn More
 
 * [Record documentation on dev.java](https://dev.java/learn/using-record-to-model-immutable-data/)
@@ -225,5 +225,5 @@ public record Range(int start, int end) {
 ## Acknowledgements
 
 * **Author** - [Nicolai Parlog, DevRel, Java Platform Group - Oracle](https://nipafx.dev/)
-* **Contributor** - [José Paumard, DevRel, Java Platform Group - Oracle](https://twitter.com/JosePaumard)
-* **Last Updated By/Date** - Nicolai Parlog, Sep. 19 2022
+* **Contributor** - [José Paumard, DevRel, Java Platform Group - Oracle](https://twitter.com/JosePaumard), [Ana-Maria Mihalceanu, Java Developer Advocate, Java Platform Group- Oracle](https://twitter.com/ammbra1508)
+* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 6 2023

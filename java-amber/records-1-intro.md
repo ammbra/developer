@@ -93,7 +93,7 @@ public static void main(String[] args) {
 </copy>
 ```
 
-Remember that you can run this small program by issuing the command `java Point.java`.
+Remember that you can run this small program by issuing the command `java --enable-preview --source 20 Point.java`.
 
 Congratulations on creating your first record!
 Now let's see how to customize it.
@@ -107,5 +107,5 @@ Now let's see how to customize it.
 ## Acknowledgements
 
 * **Author** - [Nicolai Parlog, DevRel, Java Platform Group - Oracle](https://nipafx.dev/)
-* **Contributor** - [José Paumard, DevRel, Java Platform Group - Oracle](https://twitter.com/JosePaumard)
-* **Last Updated By/Date** - Nicolai Parlog, Sep. 19 2022
+* **Contributor** - [José Paumard, DevRel, Java Platform Group - Oracle](https://twitter.com/JosePaumard), [Ana-Maria Mihalceanu, Java Developer Advocate, Java Platform Group- Oracle](https://twitter.com/ammbra1508)
+* **Last Updated By/Date** - Ana-Maria Mihalceanu, March 6 2023
