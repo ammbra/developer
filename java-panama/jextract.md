@@ -70,47 +70,46 @@ Head to [https://jdk.java.net/jextract/](https://jdk.java.net/jextract/) and dow
 
 ```text
 > <copy>
-wget https://download.java.net/java/early_access/jextract/2/openjdk-19-jextract+2-3_linux-x64_bin.tar.gz -P ~/
+wget https://download.java.net/java/early_access/jextract/1/openjdk-20-jextract+1-2_linux-x64_bin.tar.gz -P ~/
 </copy>
 
 Resolving download.java.net (download.java.net)... 23.55.248.91
 Connecting to download.java.net (download.java.net)|23.55.248.91|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 153788298 (147M) [application/x-gzip]
-Saving to: ‘/home/david_dela/openjdk-19-jextract+2-3_linux-x64_bin.tar.gz’
+Saving to: ‘/home/xyz/openjdk-20-jextract+1-2_linux-x64_bin.tar.gz’
 
 100%[==========================================>] 153,788,298  112MB/s in 1.3s
 
-‘/home/david_dela/openjdk-19-jextract+2-3_linux-x64_bin.tar.gz’ saved [153788298/153788298]
+‘/home/xyz/openjdk-20-jextract+1-2_linux-x64_bin.gz’ saved [153788298/153788298]
 ```
 
 2. Untar the archive
 
 ```text
-> <copy>tar xvf ~/openjdk-19-jextract+2-3_linux-x64_bin.tar.gz
-</copy>
-   ```
+<copy>tar xvf ~/openjdk-20-jextract+1-2_linux-x64_bin.tar.gz</copy>
+```
 
 Make sure to update the path to include jextract.
 
 ```text
-> <copy>export PATH=$PATH:~/jextract-19/bin</copy>
+<copy>export PATH=$PATH:~/jextract-20/bin</copy>
 ````
 
 💡 If you want the updated path to be persisted, update your `.bashrc` as follow.
 ```text
-> <copy>echo 'export PATH=$PATH:~/jextract-19/bin' >> ~/.bashrc</copy>
+> <copy>echo 'export PATH=$PATH:~/jextract-20/bin' >> ~/.bashrc</copy>
 ```
 
-3. Check the insallation
+3. Check the installation
 
 Confirm that jextract is installed properly.
 
 ```text
 > <copy>jextract --version</copy>
 
-jextract 19
-JDK version 19-ea+23-1706
+jextract 20
+JDK version 20+36-2344
 WARNING: A restricted method in java.lang.foreign.Linker has been called
 WARNING: java.lang.foreign.Linker::nativeLinker has been called by module org.openjdk.jextract
 WARNING: Use --enable-native-access=org.openjdk.jextract to avoid a warning for this module
@@ -121,7 +120,7 @@ WARNING: Use --enable-native-access=org.openjdk.jextract to avoid a warning for 
 
 Before discussing jextract, let's start with a simple Java application making a downcall to a C Hello World function.
 
-1. Create the foregin code.
+1. Create the foreign code.
 
 Create a file named "helloworld.c" with the following content.
 
@@ -222,7 +221,8 @@ Option                         Description
 --source                       generate java sources                   
 -t, --target-package <package> target package for specified header files
 --version                      print version information and exit
-</copy>   ```
+</copy>   
+```
 
 
 
@@ -231,7 +231,7 @@ Option                         Description
 The goal of jextract is to mechanically generate Java bindings from C native library headers. This can be done with the following command.
 
 ```text
-> <copy>jextract --source -t clang.stdlib.stdio -I /usr/include --output ~/lab/src/main/java /usr/include/s	tdio.h</copy>
+<copy>jextract --source -t clang.stdlib.stdio -I /usr/include --output ~/lab/src/main/java /usr/include/stdio.h</copy>
 ```
 
 Let's break down the different arguments.
@@ -248,7 +248,7 @@ Running the command above instructs jextract to create a new Java package contai
 You can confirm that jextract has generated multiple classes in the target directory with the target namespace.
 
 ```text
-> <copy>find ~/lab/src/main/java/</copy>
+<copy>find ~/lab/src/main/java/</copy>
 
 …/lab/src/main/java/clang/stdlib/stdio/stdio_h.java
 …/lab/src/main/java/clang/stdlib/stdio/__fsid_t.java
@@ -272,7 +272,7 @@ You can confirm that jextract has generated multiple classes in the target direc
 ```
 
 
-jextract creates different classes, including:
+`jextract` creates different classes, including:
 * **`stdio_h.java`** - a public API class that contains all exportable C stdio functions.
 * **`FILE.java`** - a class that represents the C FILE struct, it contains [GroupLayout](https://docs.oracle.com/en/java/javase/19/docs/api/java.base/java/lang/foreign/GroupLayout.html) that corresponds to the C FILE struct as well as a set of getters and setters for each fields of the C struct.
 * a series of **`constants$XX.java`** classes holding function descriptors and method handles for every native function extracted from the C stdio library
@@ -284,9 +284,9 @@ jextract creates different classes, including:
 
 There are a few things to keep in mind:
 
-* jextract runs recursively against the specified target header file(s). In this case, the C `stdio.h` header contains some additional imports from the C standard library. So jextract is also generating the corresponding Java sources for those.
+* `jextract` runs recursively against the specified target header file(s). In this case, the C `stdio.h` header contains some additional imports from the C standard library. So jextract is also generating the corresponding Java sources for those.
 * There is only one public API class no matter how large the library is.
-* jextract will create a public class for every `struct` and `typedef` referenced in a header file.
+* `jextract` will create a public class for every `struct` and `typedef` referenced in a header file.
 
 
 ## Task 5: Jextract advanced usage
@@ -302,29 +302,29 @@ As you saw in the previous section, jextract can potentially generate a lot of J
 For instance, the following command will create a `stdio-dump.txt` file containing all native symbols jextract is capable of extracting from the `/usr/include/stdio.h` header:
 
 ```text
-> <copy>jextract --source -t clang.stdlib.stdio -I /usr/include --dump-includes stdio-dump.txt /usr/include/stdio.h</copy>
+<copy>jextract --source -t clang.stdlib.stdio -I /usr/include --dump-includes stdio-dump.txt /usr/include/stdio.h</copy>
 ```
 💡 Make sure that the directory specifed in the `--dump-includes` path exists!
 
 
 ```text
-> <copy>cat stdio-dump.txt</copy>
+<copy>cat stdio-dump.txt</copy>
 ````
 
 
 This `stdio-dump.txt` file contains a list of all the native symbols (`function`, `struct`, `enum`, `var`, `union`, etc.) jextract is able to extracte from the `/usr/include/stdio.h` header.
 
 ```text
-#### Extracted from: …/jextract-19/conf/jextract/stdarg.h
+#### Extracted from: …/jextract-20/conf/jextract/stdarg.h
 
---include-macro __GNUC_VA_LIST    # header: …/jextract-19/conf/jextract/stdarg.h
---include-typedef __gnuc_va_list  # header: …/jextract-19/conf/jextract/stdarg.h
---include-typedef va_list         # header: …/jextract-19/conf/jextract/stdarg.h
+--include-macro __GNUC_VA_LIST    # header: …/jextract-20/conf/jextract/stdarg.h
+--include-typedef __gnuc_va_list  # header: …/jextract-20/conf/jextract/stdarg.h
+--include-typedef va_list         # header: …/jextract-20/conf/jextract/stdarg.h
 
-#### Extracted from: …/jextract-19/conf/jextract/stddef.h
+#### Extracted from: …/jextract-20/conf/jextract/stddef.h
 
---include-macro NULL      # header: …/jextract-19/conf/jextract/stddef.h
---include-typedef size_t  # header: …/jextract-19/conf/jextract/stddef.h
+--include-macro NULL      # header: …/jextract-20/conf/jextract/stddef.h
+--include-typedef size_t  # header: …/jextract-20/conf/jextract/stddef.h
 
 #### Extracted from: /usr/include/_G_config.h
 
@@ -341,7 +341,7 @@ This `stdio-dump.txt` file contains a list of all the native symbols (`function`
 As you can see, that is a lot! The good news is that it is possible to ask jextract to apply some filter(s). For instance, the following command will instruct jextraxt to generate the infrastructure code only for the C `puts` native function. Check the `--include-function puts` flag.
 
 ```text
-> <copy>jextract --source -t clang.stdlib.stdio -I /usr/include --output src/main/java --include-function puts /usr/include/stdio.h</copy>
+<copy>jextract --source -t clang.stdlib.stdio -I /usr/include --output src/main/java --include-function puts /usr/include/stdio.h</copy>
 ```
 
 Filtering helps to avoid creating unnecessary Java source files by omitting `functions`, `macros`, `structs`, `vars`, and `typedefs` that are not requied. 
@@ -355,7 +355,7 @@ The following approach could be used.
 To illustrate this, you can create a bare bone dump file for one foreign function, ex. `puts`.
 
 ```text
-> <copy>echo "--include-function puts" >> simple-dump.txt</copy>
+<copy>echo "--include-function puts" >> simple-dump.txt</copy>
 ```
 You can now use this file when invoking jextract to only generate the selected classes.
 
@@ -366,10 +366,10 @@ You can now use this file when invoking jextract to only generate the selected c
 💡 The file passed to jextract via `@` is a parameters placeholder. So in addition to the `include-*` arguments, it can also contain other flag(s) and parameter(s) to pass to jextract. You use such a file to store and pass to jextract any common arguments. 
 
 ```text
-> cat param.txt 
+> cat param.txt
 --source -t clang.stdlib.stdio -I /usr/include /usr/include/stdio.h
 
-> <copy>jextract @param.txt @custom-dump.txt</copy>
+> <copy>jextract @param.txt @simple-dump.txt</copy>
 ```
 
 💡 There is only so much a tool can do. It remains essential to understand what you are filtering. For example, there may be dependencies between components of a header file. Excluding a required dependency may lead to issues when using another component relying on that dependency.
@@ -384,7 +384,7 @@ Now that you understand how jextract can help to generate the infrastructure cod
 Use jextract to generate the code required to invoke the foreign `atoi` function.
 
 ```text
-> <copy>javaextract --source -t clang.stdlib -I /usr/include --output src/main/java --include-function atoi /usr/include/stdlib.h</copy>
+<copy>jextract --source -t clang.stdlib -I /usr/include --output src/main/java --include-function atoi /usr/include/stdlib.h</copy>
 ```
 
 2. Write your logic 
@@ -394,7 +394,7 @@ Create the `src/main/java/AtoiTest.java` class with the following content.
 
 ```java
 <copy>
-import java.lang.foreign.MemorySession;
+import java.lang.foreign.Arena;
 import clang.stdlib.stdlib_h;
 
 public class AtoiTest {
@@ -403,8 +403,8 @@ public class AtoiTest {
 
      String payload = "21";
 
-     try (var memorySession = MemorySession.openConfined()) {
-        int result = (int) stdlib_h.atoi( memorySession.allocateUtf8String(payload) );
+     try (var offHeap = Arena.openConfined()) {
+        int result = (int) stdlib_h.atoi( offHeap.allocateUtf8String(payload) );
         System.out.println("The answer via the native `atoi` function is " + result*2);
      }
   }
@@ -424,16 +424,15 @@ The key line is : ```int result = (int) stdlib_h.atoi( memorySession.allocateUtf
 
 Compile your code.
 ```text
-> <copy>javac -classpath src/main/java/ -d target --enable-preview --source 19 src/main/java/AtoiTest.java</copy>
+<copy>javac -classpath src/main/java/ -d target --enable-preview --source 20 src/main/java/AtoiTest.java</copy>
 
-Note: Some input files use preview features of Java SE 19.
+Note: Some input files use preview features of Java SE 20.
 Note: Recompile with -Xlint:preview for details.
 ```
 And run your program (warnings & notes omitted from the output).
 
 ```text
-> <copy>java -classpath target --enable-preview AtoiTest
-</copy>
+<copy>java -classpath target --enable-preview AtoiTest</copy>
 
 The answer via the native `atoi` function is 42
 ```
@@ -456,5 +455,5 @@ In this lab, you have used jextract, a tool that generates the infrastructure co
 
 ## Acknowledgements
 * **Author** - [Denis Makogon, DevRel, Java Platform Group - Oracle](https://twitter.com/denis_makogon)
-* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee)
-* **Last Updated By/Date** - David Delabassée, Oct. 1 2022
+* **Contributor** -  [David Delabassée, DevRel, Java Platform Group - Oracle](https://twitter.com/delabassee),  [Ana Maria Mihalceanu, Developer Advocate, Java Platform Group - Oracle](https://twitter.com/ammbra1508)
+* **Last Updated By/Date** - [Ana Maria Mihalceanu, Developer Advocate, Java Platform Group - Oracle](https://twitter.com/ammbra1508), 13 April 2023
