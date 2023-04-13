@@ -13,9 +13,9 @@ Estimated Time: ~10 minutes
 
 The Foreign Function & Memory (FFM) API, defined in JEP 434, introduces an API by which Java programs can interoperate with code and data outside of the Java runtime. The FFM API enables (1) to efficiently invoke **foreign functions** (i.e., code outside the JVM) and (2) to safely access **foreign memory** (i.e., memory not managed by the JVM). In practice, the FFM API defines classes and interfaces so that client code can
 
-   * Allocate foreign memory (`MemorySegment`, `MemoryAddress`, and `SegmentAllocator`),
+   * Allocate foreign memory (`MemorySegment` and `SegmentAllocator`),
    * manipulate and access structured foreign memory (`MemoryLayout`),
-   * control the allocation and deallocation of foreign memory (`MemorySession`), and
+   * control the allocation and deallocation of foreign memory (`Arena`), and
    * call foreign functions (`Linker`, `FunctionDescriptor`, and `SymbolLookup`).
 
 
